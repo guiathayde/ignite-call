@@ -27,7 +27,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.api.ts",
+    "**/*api.ts",
     "**/index.tsx",
     "**/*page.tsx",
     "src/pages/home/index.tsx"
