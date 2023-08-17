@@ -12,6 +12,8 @@ import {
 import { ArrowRight } from 'phosphor-react';
 
 import { getWeekDays } from '@/utils/get-week-days';
+import { convertTimeStringToMinutes } from '@/utils/conver-time-string-to-minutes';
+import { api } from '@/lib/axios';
 
 import { Container, Header } from '../styles';
 import {
@@ -22,7 +24,6 @@ import {
   IntervalInputs,
   FormError,
 } from './styles';
-import { convertTimeStringToMinutes } from '@/utils/conver-time-string-to-minutes';
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -95,8 +96,12 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals');
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
-    console.log(data);
+  async function handleSetTimeIntervals({
+    intervals,
+  }: TimeIntervalsFormOutput) {
+    await api.post('/users/time-intervals', {
+      intervals,
+    });
   }
 
   return (
