@@ -105,7 +105,7 @@ export default function TimeIntervals() {
       intervals,
     });
 
-    await router.push('/resgister/update-profile');
+    await router.push('/register/update-profile');
   }
 
   return (
