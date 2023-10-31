@@ -6,6 +6,8 @@ import { Button, Text, TextArea, TextInput } from '@ignite-ui/react';
 import { CalendarBlank, Clock } from 'phosphor-react';
 
 import { ConfirmForm, FormHeader, FormError, FormActions } from './styles';
+import { api } from '@/lib/axios';
+import { useRouter } from 'next/router';
 
 const confirmFormSchema = z.object({
   name: z.string().min(3, { message: 'O nome precisa no mínimo 3 caracteres' }),
@@ -32,8 +34,22 @@ export function ConfirmStep({
     resolver: zodResolver(confirmFormSchema),
   });
 
-  async function handleConfirmScheduling(data: ConfirmFormData) {
-    console.log(data);
+  const router = useRouter();
+  const username = router.query.username as string | undefined;
+
+  async function handleConfirmScheduling({
+    name,
+    email,
+    observations,
+  }: ConfirmFormData) {
+    await api.post(`/users/${username}/schedule`, {
+      name,
+      email,
+      observations,
+      date: schedulingDate,
+    });
+
+    onCancelConfirmation();
   }
 
   const describedDate = dayjs(schedulingDate).format('DD [de] MMMM [de] YYYY');
