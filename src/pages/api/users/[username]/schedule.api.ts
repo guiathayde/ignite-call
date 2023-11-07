@@ -81,34 +81,38 @@ export default async function handle(
     auth: await getGoogleOAuthToken(user.id),
   });
 
-  await calendar.events.insert({
-    calendarId: 'primary',
-    conferenceDataVersion: 1,
-    requestBody: {
-      summary: `Ignite Call: ${name}`,
-      description: observations,
-      start: {
-        dateTime: schedulingDate.toISOString(),
-      },
-      end: {
-        dateTime: schedulingDate.add(1, 'hour').toISOString(),
-      },
-      attendees: [
-        {
-          displayName: name,
-          email,
+  try {
+    await calendar.events.insert({
+      calendarId: 'primary',
+      conferenceDataVersion: 1,
+      requestBody: {
+        summary: `Ignite Call: ${name}`,
+        description: observations,
+        start: {
+          dateTime: schedulingDate.toISOString(),
         },
-      ],
-      conferenceData: {
-        createRequest: {
-          requestId: scheduling.id,
-          conferenceSolutionKey: {
-            type: 'hangoutsMeet',
+        end: {
+          dateTime: schedulingDate.add(1, 'hour').toISOString(),
+        },
+        attendees: [
+          {
+            displayName: name,
+            email,
+          },
+        ],
+        conferenceData: {
+          createRequest: {
+            requestId: scheduling.id,
+            conferenceSolutionKey: {
+              type: 'hangoutsMeet',
+            },
           },
         },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error(error);
+  }
 
   return res.status(201).end();
 }

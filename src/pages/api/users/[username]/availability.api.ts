@@ -79,7 +79,7 @@ export default async function handle(
   });
 
   const availableTimes = possibleTimes.filter((time) => {
-    const isTimeBlocked = !blockedTimes.some(
+    const isTimeBlocked = blockedTimes.some(
       (blockedTime) => blockedTime.date.getHours() === time
     );
 
