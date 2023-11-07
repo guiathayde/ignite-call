@@ -77,7 +77,6 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
 
       return response.data;
     },
-    enabled: !!username && !!selectedDate,
   });
 
   const calendarWeeks = useMemo(() => {

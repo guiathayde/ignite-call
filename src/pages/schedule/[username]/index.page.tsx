@@ -1,9 +1,9 @@
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { Avatar, Heading, Text } from '@ignite-ui/react';
 
 import { prisma } from '@/lib/prisma';
 
 import { Container, UserHeader } from './styles';
-import { GetStaticPaths, GetStaticProps } from 'next';
 import { ScheduleForm } from './ScheduleForm/index.page';
 
 interface ScheduleProps {
@@ -40,7 +40,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const user = await prisma.user.findUnique({
     where: { username },
-    include: { timeIntervals: true },
   });
 
   if (!user) {
